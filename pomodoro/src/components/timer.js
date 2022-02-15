@@ -15,7 +15,6 @@ function Timer(){
         };
     }
     //This code sets the maximum number for each position
-
     function startTimer(deadline) {
         let {total, hours, minutes, seconds } = getTimeRemaining(deadline);
         console.log('deadline', deadline);
@@ -54,7 +53,25 @@ function Timer(){
         deadline.setMinutes(deadline.getMinutes()+15)
         return deadline;
     }
-    function breakTimer(endtime){
+
+    function getFiveMinuteBreakTime(){
+        let deadline = new Date ();
+        deadline.setSeconds(deadline.getSeconds()+0);
+        deadline.setMinutes(deadline.getMinutes()+5)
+        return deadline;
+    }
+
+    function fiveMinuteBreakTimer(endtime){
+        setTimer('5:00');
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        const id = setInterval(()=>{
+            startTimer(endtime);
+        }, 1000)
+        intervalRef.current = id;
+        console.log('endtime', endtime);
+    }
+
+    function fifteenMinuteBreakTimer(endtime){
         setTimer('15:00');
         if (intervalRef.current) clearInterval(intervalRef.current);
         const id = setInterval(()=>{
@@ -90,10 +107,16 @@ function Timer(){
         clearTimer(getDeadlineTime());
     }
 
-    function onClickBreakBtn(){
-        if (intervalRef.current) breakTimer(intervalRef.current);
-        breakTimer(getBreakTime());
+    function onClickFifteenMinuteBreakBtn(){
+        if (intervalRef.current) fifteenMinuteBreakTimer(intervalRef.current);
+        fifteenMinuteBreakTimer(getBreakTime());
     }
+
+    function onClickFiveMinuteBreakBtn(){
+        if (intervalRef.current) fiveMinuteBreakTimer(intervalRef.current);
+        fiveMinuteBreakTimer(getFiveMinuteBreakTime());
+    }
+
     return ( 
     <div className = 'app'>
         <div className = 'timerFace'>
@@ -104,7 +127,8 @@ function Timer(){
                 <button className = 'btn' onClick = {onClickResetBtn}> Reset </button>
             </div>
             <div className = 'btnPadding'>
-                <button className = 'breakBtn' onClick = {onClickBreakBtn}> Take a break </button>
+                <button className = 'breakBtn' onClick = {onClickFiveMinuteBreakBtn}> 5 Min Break </button>
+                <button className = 'breakBtn' onClick = {onClickFifteenMinuteBreakBtn}> 15 Min Break </button>
             </div>
         </div>
     </div>

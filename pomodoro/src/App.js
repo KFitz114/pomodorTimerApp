@@ -4,7 +4,7 @@ import Timer from './components/timer.js';
 function App() {
   return (
     <div className="App"> 
-    <h1> Pomodoro app </h1>
+      <h1> Pomodoro app </h1>
       <div className = 'counter'> <Timer /> </div>
     </div>
   );
